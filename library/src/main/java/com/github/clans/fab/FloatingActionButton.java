@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
-import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -34,9 +33,10 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class FloatingActionButton extends AppCompatImageButton {
+public class FloatingActionButton extends ImageButton {
 
     public static final int SIZE_NORMAL = 0;
     public static final int SIZE_MINI = 1;
@@ -107,6 +107,12 @@ public class FloatingActionButton extends AppCompatImageButton {
 
     public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs, defStyleAttr);
     }
 
