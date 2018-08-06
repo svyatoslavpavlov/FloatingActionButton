@@ -230,6 +230,10 @@ public class FloatingActionMenu extends ViewGroup {
 
     }
 
+    public boolean isAlwaysOpened() {
+        return this.mAlwaysExpanded;
+    }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
