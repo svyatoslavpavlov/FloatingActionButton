@@ -1078,7 +1078,13 @@ public class FloatingActionMenu extends ViewGroup {
     }
 
     public void removeAllMenuButtons() {
-        close(true);
+        removeAllMenuButtons(true);
+    }
+
+    public void removeAllMenuButtons(boolean close) {
+        if (close) {
+            close(true);
+        }
 
         List<FloatingActionButton> viewsToRemove = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++) {
