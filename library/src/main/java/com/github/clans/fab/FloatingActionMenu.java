@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.content.res.AppCompatResources;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -623,8 +624,9 @@ public class FloatingActionMenu extends ViewGroup {
         scaleInX.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                getMenuIconView().setImageDrawable(isOpened()
-                        ? openedIcon : closedIcon);
+                boolean opened = isOpened();
+                Drawable imageDrawable = opened ? closedIcon : openedIcon;
+                getMenuIconView().setImageDrawable(imageDrawable);
             }
         });
 
@@ -710,7 +712,7 @@ public class FloatingActionMenu extends ViewGroup {
             } else {
                 close(animate);
             }
-        } else {
+        } else if (!mIsMenuOpening){
             open(animate);
         }
     }
@@ -734,6 +736,13 @@ public class FloatingActionMenu extends ViewGroup {
             int delay = 0;
             int counter = 0;
             mIsMenuOpening = true;
+
+            float durationScale = 1;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                durationScale = Settings.Global.getFloat(getContext().getContentResolver(),
+                        Settings.Global.ANIMATOR_DURATION_SCALE, 1);
+            }
+
             for (int i = getChildCount() - 1; i >= 0; i--) {
                 View child = getChildAt(i);
                 if (child instanceof FloatingActionButton && child.getVisibility() != GONE) {
@@ -755,7 +764,7 @@ public class FloatingActionMenu extends ViewGroup {
                             }
                         }
                     }, delay);
-                    delay += mAnimationDelayPerItem;
+                    delay += (mAnimationDelayPerItem * durationScale);
                 }
             }
 
@@ -768,7 +777,7 @@ public class FloatingActionMenu extends ViewGroup {
                         mToggleListener.onMenuToggle(true);
                     }
                 }
-            }, ++counter * mAnimationDelayPerItem);
+            }, (long) (++counter * (mAnimationDelayPerItem * durationScale)));
         }
     }
 
@@ -791,6 +800,11 @@ public class FloatingActionMenu extends ViewGroup {
             int delay = 0;
             int counter = 0;
             mIsMenuOpening = false;
+            float durationScale = 1;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                durationScale = Settings.Global.getFloat(getContext().getContentResolver(),
+                        Settings.Global.ANIMATOR_DURATION_SCALE, 1);
+            }
             for (int i = 0; i < getChildCount(); i++) {
                 View child = getChildAt(i);
                 if (child instanceof FloatingActionButton && child.getVisibility() != GONE) {
@@ -812,7 +826,7 @@ public class FloatingActionMenu extends ViewGroup {
                             }
                         }
                     }, delay);
-                    delay += mAnimationDelayPerItem;
+                    delay += mAnimationDelayPerItem * durationScale;
                 }
             }
 
@@ -825,7 +839,7 @@ public class FloatingActionMenu extends ViewGroup {
                         mToggleListener.onMenuToggle(false);
                     }
                 }
-            }, ++counter * mAnimationDelayPerItem);
+            }, (long) (++counter * (mAnimationDelayPerItem * durationScale)));
         }
     }
 
