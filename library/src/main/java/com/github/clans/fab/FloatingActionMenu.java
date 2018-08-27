@@ -624,7 +624,7 @@ public class FloatingActionMenu extends ViewGroup {
             @Override
             public void onAnimationStart(Animator animation) {
                 getMenuIconView().setImageDrawable(isOpened()
-                        ? closedIcon : openedIcon);
+                        ? openedIcon : closedIcon);
             }
         });
 
