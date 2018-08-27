@@ -723,6 +723,7 @@ public class FloatingActionMenu extends ViewGroup {
 
             if (mIconAnimated) {
                 if (mIconToggleSet != null) {
+                    mIconToggleSet.cancel();
                     mIconToggleSet.start();
                 } else {
                     mCloseAnimatorSet.cancel();
@@ -779,6 +780,7 @@ public class FloatingActionMenu extends ViewGroup {
 
             if (mIconAnimated) {
                 if (mIconToggleSet != null) {
+                    mIconToggleSet.cancel();
                     mIconToggleSet.start();
                 } else {
                     mCloseAnimatorSet.start();
