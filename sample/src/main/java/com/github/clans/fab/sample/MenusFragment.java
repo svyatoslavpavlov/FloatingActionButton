@@ -114,6 +114,8 @@ public class MenusFragment extends Fragment {
         menuBlue.setOnMenuButtonOpenedClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                menuGreen.close(false);
+                menuYellow.close(false);
                 Snackbar.make(view, "Clicked", Snackbar.LENGTH_SHORT).show();
             }
         });
