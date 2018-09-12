@@ -784,6 +784,11 @@ public class FloatingActionMenu extends ViewGroup {
     public void close(final boolean animate) {
         if (isOpened()) {
             if (isBackgroundEnabled()) {
+                if (!animate) {
+                    mHideBackgroundAnimator.setDuration(0);
+                } else {
+                    mHideBackgroundAnimator.setDuration(100);
+                }
                 mHideBackgroundAnimator.start();
             }
 
