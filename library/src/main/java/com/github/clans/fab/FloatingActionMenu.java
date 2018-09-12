@@ -712,7 +712,7 @@ public class FloatingActionMenu extends ViewGroup {
             } else {
                 close(animate);
             }
-        } else if (!mIsMenuOpening){
+        } else if (!mIsMenuOpening) {
             open(animate);
         }
     }
@@ -790,8 +790,19 @@ public class FloatingActionMenu extends ViewGroup {
             if (mIconAnimated) {
                 if (mIconToggleSet != null) {
                     mIconToggleSet.cancel();
+                    if (!animate) {
+                        mIconToggleSet.setDuration(0);
+                    } else {
+                        mIconToggleSet.setDuration(100);
+                    }
                     mIconToggleSet.start();
+
                 } else {
+                    if (!animate) {
+                        mCloseAnimatorSet.setDuration(0);
+                    } else {
+                        mCloseAnimatorSet.setDuration(100);
+                    }
                     mCloseAnimatorSet.start();
                     mOpenAnimatorSet.cancel();
                 }
@@ -826,7 +837,10 @@ public class FloatingActionMenu extends ViewGroup {
                             }
                         }
                     }, delay);
-                    delay += mAnimationDelayPerItem * durationScale;
+
+                    if (animate) {
+                        delay += mAnimationDelayPerItem * durationScale;
+                    }
                 }
             }
 
