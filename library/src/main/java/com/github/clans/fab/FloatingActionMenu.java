@@ -782,6 +782,7 @@ public class FloatingActionMenu extends ViewGroup {
     }
 
     public void close(final boolean animate) {
+        if (isAlwaysOpened()) return;
         if (isOpened()) {
             if (isBackgroundEnabled()) {
                 if (!animate) {
